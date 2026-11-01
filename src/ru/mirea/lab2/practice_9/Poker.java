@@ -15,7 +15,8 @@ public class Poker {
         List<String> deck = new ArrayList<>();
         for (String suit : suits)
             for (String rank : ranks)
-                deck.add(rank + " " + suit); Collections.shuffle(deck);
+                deck.add(rank + " " + suit);
+        Collections.shuffle(deck);
         for (int player = 0; player < n; player++) { System.out.println("Игрок " + (player + 1) + ":");
             for (int card = 0; card < 5; card++) System.out.println(deck.get(player * 5 + card));
             System.out.println(); }
