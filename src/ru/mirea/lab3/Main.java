@@ -1,5 +1,7 @@
 package ru.mirea.lab3;
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Scanner;
 
 class CurrencyConverter {
@@ -31,7 +33,7 @@ class CurrencyConverter {
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        CurrencyConverter converter = new CurrencyConverter(90.0, 98.0);
+        CurrencyConverter converter = new CurrencyConverter(80.0, 95.0);
 
         System.out.println("Конвертер валют (учебные курсы)");
         System.out.println("1 — рубли в доллары");
@@ -48,17 +50,42 @@ public class Main {
             return;
         }
 
+        Locale rub = new Locale("ru", "RU");
+        Locale usd = Locale.US;
+        Locale eur = Locale.GERMANY;
+
         double result;
-        String currency;
+        Locale from;
+        Locale to;
         switch (choice) {
-            case 1: result = converter.rublesToDollars(amount); currency = "USD"; break;
-            case 2: result = converter.dollarsToRubles(amount); currency = "RUB"; break;
-            case 3: result = converter.rublesToEuros(amount); currency = "EUR"; break;
-            case 4: result = converter.eurosToRubles(amount); currency = "RUB"; break;
+            case 1:
+                result = converter.rublesToDollars(amount);
+                from = rub;
+                to = usd;
+                break;
+            case 2:
+                result = converter.dollarsToRubles(amount);
+                from = usd;
+                to = rub;
+                break;
+            case 3:
+                result = converter.rublesToEuros(amount);
+                from = rub;
+                to = eur;
+                break;
+            case 4:
+                result = converter.eurosToRubles(amount);
+                from = eur;
+                to = rub;
+                break;
             default:
                 System.out.println("Такого пункта меню нет.");
                 return;
         }
-        System.out.printf("Результат: %.2f %s%n", result, currency);
+        NumberFormat fromFormat = NumberFormat.getCurrencyInstance(from);
+        NumberFormat toFormat = NumberFormat.getCurrencyInstance(to);
+        System.out.println("Сумма: " + fromFormat.format(amount));
+        System.out.println("Результат: " + toFormat.format(result));
     }
+
 }
